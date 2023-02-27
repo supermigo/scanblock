@@ -1,0 +1,4 @@
+scanchainlist
+logs/
+logs/*
+./logs
