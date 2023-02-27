@@ -139,14 +139,14 @@ func (s *EthListener) Scan(parentContext context.Context) (daemonfun daemon.Daem
 						receipt, err := s.EthClient.TransactionReceipt(context.Background(), tx.Hash())
 						if err != nil {
 							xlog.CError(err.Error())
-						}
-
-						for _, vLog := range receipt.Logs {
-							consumer, isExisted := s.matchEvent(*vLog)
-							if isExisted {
-								err := consumer.ParseEvent(*vLog)
-								if err != nil {
-									xlog.CErrorf("[eth_client] Consume event error")
+						} else {
+							for _, vLog := range receipt.Logs {
+								consumer, isExisted := s.matchEvent(*vLog)
+								if isExisted {
+									err := consumer.ParseEvent(*vLog)
+									if err != nil {
+										xlog.CErrorf("[eth_client] Consume event error")
+									}
 								}
 							}
 						}
